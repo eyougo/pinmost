@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+    <include-error-pages>false</include-error-pages>
+    <mapping>
+        <path>/*</path>
+        <decorator>/surface</decorator>
+    </mapping>
+	<mapping path="/js/*" exclude="true" />
+    <mapping path="/css/*" exclude="true" />
+	<mapping path="/fonts/*" exclude="true" />
+</sitemesh>

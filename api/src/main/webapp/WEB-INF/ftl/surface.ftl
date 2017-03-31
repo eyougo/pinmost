@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>品陌PinMost.com -
+        <sitemesh:write property="title"/>
+    </title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <style media="screen" type="text/css">
+        .text-hidden {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+    </style>
+    <sitemesh:write property="head"/>
+</head>
+<body style="padding-top:70px;">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-10">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">品陌&nbsp;PinMost.com</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">&nbsp;全站&nbsp;<span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">&nbsp;我的&nbsp;</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">&nbsp;登录&nbsp;</a></li>
+                        <li><a href="#">&nbsp;注册&nbsp;</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+</nav>
+<sitemesh:write property="body"/>
+</body>
+</html>
