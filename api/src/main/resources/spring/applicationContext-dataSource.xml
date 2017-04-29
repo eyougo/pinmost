@@ -12,19 +12,19 @@
 	<bean class="com.pinmost.api.common.preference.CommonPropertyPlaceholderConfigurer" />
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="driverClass" value="org..Driver" />
-		<property name="jdbcUrl" value="${datasource.jdbcUrl}" />
-		<property name="user" value="${datasource.user}" />
-		<property name="password" value="${datasource.password}" />
-		<property name="maxIdleTime" value="10800" />
-		<property name="maxConnectionAge" value="21600" />
-		<property name="initialPoolSize" value="30" />
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="${dataSource.jdbcUrl}" />
+		<property name="user" value="${dataSource.user}" />
+		<property name="password" value="${dataSource.password}" />
+		<property name="maxIdleTime" value="1800" />
+		<property name="maxConnectionAge" value="3600" />
+		<property name="initialPoolSize" value="5" />
 		<property name="minPoolSize" value="3" />
 		<property name="acquireIncrement" value="10" />
-		<property name="maxPoolSize" value="150" />
-		<property name="maxStatementsPerConnection" value="100" />
-		<property name="maxStatements" value="10000" />
-		<property name="numHelperThreads" value="30" />
+		<property name="maxPoolSize" value="50" />
+		<property name="maxStatementsPerConnection" value="50" />
+		<property name="maxStatements" value="1000" />
+		<property name="numHelperThreads" value="2" />
 	</bean>
 
 

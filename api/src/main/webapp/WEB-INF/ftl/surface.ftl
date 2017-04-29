@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="${rc.contextPath}/js/bootstrap.js"></script>
     <style media="screen" type="text/css">
         .text-hidden {
             overflow: hidden;
@@ -38,12 +38,18 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">&nbsp;全站&nbsp;<span class="sr-only">(current)</span></a></li>
-                        <li><a href="#">&nbsp;我的&nbsp;</a></li>
+                        <li class="active"><a href="#">&nbsp;最新加入&nbsp;<span class="sr-only">(current)</span></a></li>
+                        <li><a href="#">&nbsp;最热点击&nbsp;</a></li>
+                        <li><a href="#">&nbsp;最多收藏&nbsp;</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">&nbsp;登录&nbsp;</a></li>
-                        <li><a href="#">&nbsp;注册&nbsp;</a></li>
+                    <#if Session['account']>
+                        <li><a href="${rc.getContextUrl("/" + Session['account'].username)}">&nbsp;我的&nbsp;</a>
+                        <li><a href="${rc.getContextUrl("/logout")}">&nbsp;退出&nbsp;</a>
+                    <#else >
+                        <li><a href="${rc.contextPath}/login">&nbsp;登录&nbsp;</a></li>
+                        <li><a href="${rc.contextPath}/join">&nbsp;注册&nbsp;</a></li>
+                    </#if>
                     </ul>
                 </div>
             </div>

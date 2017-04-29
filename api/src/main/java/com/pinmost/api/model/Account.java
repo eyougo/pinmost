@@ -11,7 +11,6 @@ public class Account extends BaseModel implements Serializable{
     private Integer id;
     private String username;
     private String password;
-    private String mobile;
     private String email;
 
     public Integer getId() {
@@ -36,14 +35,6 @@ public class Account extends BaseModel implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getMobile() {
-        return mobile;
-    }
-
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
     }
 
     public String getEmail() {

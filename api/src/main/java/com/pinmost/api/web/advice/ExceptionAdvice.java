@@ -1,16 +1,22 @@
 package com.pinmost.api.web.advice;
 
+import com.pinmost.api.common.exception.CustomerException;
 import com.pinmost.api.common.exception.NotFoundException;
 import com.pinmost.api.common.exception.UnauthorizedException;
 import com.pinmost.api.web.result.ErrorResult;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.Locale;
 
 /**
  * User: mei
@@ -21,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ExceptionAdvice {
 
     private static final Log LOG = LogFactory.getLog(ExceptionAdvice.class);
+    @Autowired
+    private MessageSource messageSource;
 
     @ExceptionHandler({NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -50,6 +58,16 @@ public class ExceptionAdvice {
         errorResult.setMessage(exception.getMessage());
         return errorResult;
     }
+
+    @ExceptionHandler({CustomerException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ErrorResult handleCustomerException(Locale locale, CustomerException exception) {
+        ErrorResult errorResult = new ErrorResult();
+        errorResult.setMessage(messageSource.getMessage(exception.getErrorCode(), exception.getStubParams(), locale));
+        return errorResult;
+    }
+
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)

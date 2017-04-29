@@ -7,7 +7,15 @@ import com.pinmost.api.model.Account;
  */
 public interface AccountDao {
 
+    String getMySQLPassword(String password);
+
     Account getByLogin(String login);
 
     int createAccount(Account account);
+
+    Account getByUsername(String username);
+
+    int getCountByEmail(String email);
+
+    int getCountByUsername(String username);
 }
