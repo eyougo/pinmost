@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd
+        http://www.springframework.org/schema/mvc  
+    	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
+
+    <context:component-scan base-package="com.pinmost.web.controller, com.eyougo.common.web" use-default-filters="false" >
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+        <context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+    </context:component-scan>
+
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="utf-8"></constructor-arg>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>text/plain;charset=UTF-8</value>
+                        <value>*/*</value>
+                    </list>
+                </property>
+            </bean>
+            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                <property name="objectMapper">
+                    <bean class="com.eyougo.common.json.ConversionServiceAwareObjectMapper">
+                        <constructor-arg>
+                            <bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean"/>
+                        </constructor-arg>
+                    </bean>
+                </property>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>application/json;charset=UTF-8</value>
+                        <value>application/*+json;charset=UTF-8</value>
+                        <value>text/json;charset=UTF-8</value>
+                    </list>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="order" value="1"></property>
+        <property name="cache" value="true"/>
+        <property name="contentType" value="text/html;charset=UTF-8"></property>
+        <!-- 宏命令的支持 -->
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="requestContextAttribute" value="rc"></property>
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+    </bean>
+
+    <bean id="freeMarkerConfigurer" class="com.eyougo.common.web.view.HtmlEscapeFreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/ftl/" />
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="template_update_delay">5</prop>
+                <prop key="default_encoding">UTF-8</prop>
+                <prop key="locale">zh_CN</prop>
+                <prop key="number_format">0.##########</prop>
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <prop key="classic_compatible">true</prop>
+                <prop key="template_exception_handler">ignore</prop>
+                <prop key="auto_import">import/spring.ftl as spring</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages/account</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+        <property name="defaultLocale" value="zh_CN" />
+        <property name="cookieName" value="PinMostLocale" />
+        <property name="cookieMaxAge" value="94608000" />
+    </bean>
+
+    <bean id="exceptionResolver" class="com.eyougo.common.web.resolver.CompositeViewOutputStackMappingExceptionResolver">
+        <property name="defaultErrorView">
+            <value>/error.ftl</value>
+        </property>
+        <property name="defaultStatusCode" value="#{T(org.springframework.http.HttpStatus).INTERNAL_SERVER_ERROR.value()}" />
+        <property name="order">
+            <value>-1</value> <!--定义处理器顺序，越小越靠前-->
+        </property>
+        <property name="statusCodes">
+            <props>
+                <prop key="permission.ftl" >403</prop>
+            </props>
+        </property>
+        <property name="warnLogCategory">
+            <value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>
+        </property>
+    </bean>
+    <mvc:default-servlet-handler/>
+</beans>

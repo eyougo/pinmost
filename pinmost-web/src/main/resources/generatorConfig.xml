@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- JDBC 包的绝对地址 -->
+
+    <context id="MySqlTables" defaultModelType="flat" targetRuntime="MyBatis3">
+
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+
+        <!-- 不生成注释 -->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+        <!-- JDBC -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/pinmost?useSSL=false" userId="root"
+                        password="smile1983">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+
+        <!-- 实体类 -->
+        <javaModelGenerator targetPackage="com.pinmost.web.model"
+                            targetProject="src/main/java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+            <property name="rootClass" value="com.eyougo.common.model.BaseModel" />
+        </javaModelGenerator>
+
+
+        <!-- Mapper XML -->
+        <sqlMapGenerator targetPackage="com.pinmost.web.dao.mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+
+
+        <javaClientGenerator type="XMLMAPPER" 
+                             targetPackage="com.pinmost.web.dao.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false" />
+            <property name="rootInterface" value="com.eyougo.common.dao.BaseMapper" />
+        </javaClientGenerator>
+
+        <!--
+        tableName 数据库表名
+        Account 实体类类名
+        不生成Example相关文件
+        useActualColumnNames 是否使用实际列名（false 则自动生成驼峰式的字段名）
+        generatedKey 自增主键（如果主键不是自增，则不用写）
+        columnOverride 自定义规则 数据库字段 -> 属性
+        ignoreColumn 不生成某字段
+         -->
+        <table tableName="website_collect" domainObjectName="WebsiteCollect" modelType="flat"
+               enableDeleteByPrimaryKey="false"
+               enableCountByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" enableUpdateByExample="false">
+            <property name="useActualColumnNames" value="false" />
+            <generatedKey column="id" sqlStatement="MySql" identity="true" />
+            <columnOverride column="created_at" isGeneratedAlways="true" />
+            <columnOverride column="updated_at" isGeneratedAlways="true" />
+        </table>
+
+    </context>
+</generatorConfiguration>
