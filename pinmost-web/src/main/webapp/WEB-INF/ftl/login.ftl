@@ -9,6 +9,9 @@
         <div class="col-md-4"></div>
         <div class="col-md-4">
             <form method="post" action="${rc.contextPath}/session">
+                <#if redirect??>
+                <input type="hidden" name="redirect" value="${redirect}">
+                </#if>
                 <h2>请登录</h2>
                 <div class="form-group">
                     <label for="inputLogin" class="sr-only">Email</label>

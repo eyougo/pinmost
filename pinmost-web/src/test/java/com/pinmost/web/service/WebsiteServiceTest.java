@@ -27,12 +27,15 @@ public class WebsiteServiceTest extends AbstractSpringTest{
 
     @Test
     public void doCreateWebsite() throws Exception {
-        Website website = new Website();
-        website.setClickCount(0);
-        website.setTitle("ddddasdfasdfasdfdasdfasdfasdf");
-        website.setSummary("adadfpyueqprqwnepghanfangasngapsdn asdfasdfanf  asdijfasijdfas adijfangphapdfjas asdjfasdjfaisdjf");
-        website.setUrl("http://www.baidu.com");
-        websiteService.doCreateWebsite(website, 1);
+
+        for (int i = 0; i < 100; i++) {
+            Website website = new Website();
+            website.setClickCount(i);
+            website.setTitle(i+"ddddasdfasdfasdfdasdfasdfasdf");
+            website.setSummary(i+"adadfpyueqprqwnepghanfangasngapsdn asdfasdfanf  asdijfasijdfas adijfangphapdfjas asdjfasdjfaisdjf");
+            website.setUrl("http://www.sdfs.com"+i);
+            websiteService.doCreateWebsite(website, 1);
+        }
     }
 
 }

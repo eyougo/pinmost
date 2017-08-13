@@ -1,6 +1,7 @@
 package com.pinmost.web.service;
 
 import com.eyougo.common.result.BooleanResult;
+import com.eyougo.common.result.DataResult;
 import com.eyougo.common.result.RangeDataResult;
 import com.pinmost.web.model.Website;
 import com.pinmost.web.model.WebsiteAccount;
@@ -15,4 +16,8 @@ public interface WebsiteService {
     RangeDataResult<WebsiteAccount> getMostClickList(int offset);
 
     BooleanResult doCreateWebsite(Website website, Integer accountId);
+
+    DataResult<Website> getWebsite(String url);
+
+    DataResult<Website> doClickWebsite(Integer id);
 }

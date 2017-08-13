@@ -102,5 +102,16 @@
             <value>org.springframework.web.servlet.handler.SimpleMappingExceptionResolver</value>
         </property>
     </bean>
+
+    <bean id="loginInterceptor" class="com.pinmost.web.interceptor.LoginInterceptor"></bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/pin" />
+            <mvc:mapping path="/pinSubmit" />
+            <ref bean="loginInterceptor" />
+        </mvc:interceptor>
+    </mvc:interceptors>
+
     <mvc:default-servlet-handler/>
 </beans>

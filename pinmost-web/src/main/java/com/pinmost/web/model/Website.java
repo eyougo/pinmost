@@ -1,13 +1,12 @@
 package com.pinmost.web.model;
 
 import com.eyougo.common.model.BaseModel;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.Date;
+import java.io.Serializable;
 
-public class Website extends BaseModel{
+public class Website extends BaseModel implements Serializable{
+    private static final long serialVersionUID = 2910355695910552721L;
+
     private Integer id;
 
     private String title;

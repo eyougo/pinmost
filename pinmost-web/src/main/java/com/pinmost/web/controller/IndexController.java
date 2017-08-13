@@ -17,6 +17,11 @@ public class IndexController {
 
     @RequestMapping({"/index", "/"})
     public String index(){
-        return "index.ftl";
+        return "most_new.ftl";
+    }
+
+    @RequestMapping({"/most_click"})
+    public String mostClick(){
+        return "most_click.ftl";
     }
 }
