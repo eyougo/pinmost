@@ -27,8 +27,10 @@ public class AccountController extends BaseController{
     private AccountService accountService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(@RequestParam String redirect, Model model)  {
-        model.addAttribute("redirect",redirect);
+    public String login(@RequestParam(required = false) String redirect, Model model)  {
+        if (StringUtils.isNotEmpty(redirect)) {
+            model.addAttribute("redirect", redirect);
+        }
         return "login.ftl";
     }
 

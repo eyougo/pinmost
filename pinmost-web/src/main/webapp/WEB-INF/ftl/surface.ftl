@@ -46,11 +46,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="${rc.contextPath}">PinMost.com</a>
+                    <a class="navbar-brand" href="${rc.contextPath}/">PinMost.com</a>
                 </div>
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
-                        <li <#if rc.requestUri == rc.getContextUrl("/") || rc.requestUri == rc.getContextUrl("/index")>class="active"</#if>><a href="${rc.contextPath}">&nbsp;最新发布的Pin&nbsp;<span class="sr-only">(current)</span></a></li>
+                        <li <#if rc.requestUri == rc.getContextUrl("/") || rc.requestUri == rc.getContextUrl("/index")>class="active"</#if>><a href="${rc.contextPath}/">&nbsp;最新发布的Pin&nbsp;<span class="sr-only">(current)</span></a></li>
                         <li <#if rc.requestUri == rc.getContextUrl("/most_click")>class="active"</#if>><a href="${rc.contextPath}/most_click">&nbsp;点击最多的Pin&nbsp;</a></li>
                         <#--
                         <li><a href="#">&nbsp;最多收藏&nbsp;</a></li>-->

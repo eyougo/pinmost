@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <form method="post" action="${rc.contextPath}/website/pinSubmit">
+            <form method="post" action="${rc.contextPath}/pinSubmit">
                 <h2>Pin一下</h2>
                 <div class="form-group">
                     <label for="inputUrl">网页的URL地址</label>
@@ -43,7 +43,7 @@
             }
             $("#error").addClass("hide");
             $.ajax({
-                url: "${rc.contextPath}/website/get",
+                url: "${rc.contextPath}/getUrl",
                 data: {
                     url: url
                 },
@@ -58,7 +58,11 @@
                     }
                 },
                 error: function (jqXHR, status, errorThrown) {
-                    $("#error").text(errorThrown + " : " + jqXHR.responseJSON.message);
+                    if (jqXHR.responseJSON) {
+                        $("#error").text(errorThrown + " : " + jqXHR.responseJSON.message);
+                    } else if (jqXHR.responseText) {
+                        $("#error").text(errorThrown + " : " + jqXHR.responseText);
+                    }
                     $("#error").removeClass("hide");
                 },
                 type:'post',

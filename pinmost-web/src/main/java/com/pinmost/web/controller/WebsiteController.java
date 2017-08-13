@@ -59,7 +59,7 @@ public class WebsiteController extends BaseController{
         }
     }
 
-    @RequestMapping("/get")
+    @RequestMapping("/getUrl")
     @ResponseBody
     public DataResult<Website> get(@RequestParam String url) {
         return websiteService.getWebsite(url);
