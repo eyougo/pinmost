@@ -58,7 +58,7 @@
         #{email,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+        password(#{password,jdbcType=VARCHAR}),
       </if>
     </trim>
   </insert>
@@ -72,7 +72,7 @@
         email = #{email,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+        password = password(#{password,jdbcType=VARCHAR}),
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}

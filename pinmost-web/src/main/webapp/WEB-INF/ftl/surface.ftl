@@ -40,7 +40,7 @@
             <div class="col-md-10">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                            data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            data-target="#bs-navbar-collapse" aria-expanded="false">
                         <span class="sr-only">Toggle navigation</span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -48,10 +48,10 @@
                     </button>
                     <a class="navbar-brand" href="${rc.contextPath}/">PinMost.com</a>
                 </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li <#if rc.requestUri == rc.getContextUrl("/") || rc.requestUri == rc.getContextUrl("/index")>class="active"</#if>><a href="${rc.contextPath}/">&nbsp;最新发布的Pin&nbsp;<span class="sr-only">(current)</span></a></li>
-                        <li <#if rc.requestUri == rc.getContextUrl("/most_click")>class="active"</#if>><a href="${rc.contextPath}/most_click">&nbsp;点击最多的Pin&nbsp;</a></li>
+                <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+                    <ul class="nav navbar-nav" id="navbar">
+                        <li><a href="${rc.contextPath}/">&nbsp;最新发布的Pin&nbsp;</a></li>
+                        <li><a href="${rc.contextPath}/most_click">&nbsp;点击最多的Pin&nbsp;</a></li>
                         <#--
                         <li><a href="#">&nbsp;最多收藏&nbsp;</a></li>-->
                     </ul>
@@ -78,42 +78,6 @@
         <span class="glyphicon glyphicon-triangle-top" aria-hidden="true"></span>
     </button>
 </div>
-<script id='websiteTemplate' type='text/x-jquery-tmpl'>
-        <div class="list-group-item">
-            <h4 class="list-group-item-heading">
-                <div class="row">
-                    <div class="col-xs-10 col-md-9 text-hidden">
-                        <a href="${rc.contextPath}/click?id=${r'${id}'}" target="_blank">${r'${title}'}</a>
-                    </div>
-                    <div class="col-xs-2 col-md-3 text-right text-muted">
-                        <small class="hidden-xs"><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> ${r'${clickCount}'}</small>
-                        <#-- &nbsp;
-                        <small class="hidden-xs"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> ${r'${starCount}'}</small>
-                        -->
-                    </div>
-                </div>
-            </h4>
-            <div class="list-group-item-text">
-                <p>${r'${summary}'}
-                </p>
-                <div class="row">
-                    <div class="col-xs-10 col-md-9 text-muted">
-                        来自: ${r'${username}'} &nbsp;&nbsp;时间：${r'${createdAt}'}
-                    </div>
-                    <span class="col-xs-2 col-md-3 text-right">
-                        <#--
-                        <a>
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 收藏 &nbsp;&nbsp;
-                        </a>
-                        <a>
-                        <span class="glyphicon glyphicon-share" aria-hidden="true"></span> 分享
-                        </a>
-                        -->
-                    </span>
-                </div>
-            </div>
-        </div>
-</script>
 <script type="text/javascript">
     $(document).ready(function () {
         if ($(window).scrollTop() < 300) {
@@ -133,32 +97,35 @@
         });
     });
 
-    var nextOffset = 0;
+    function setActiveNavbar(index) {
+        $("#navbar").children()
+    }
 
-    function loadWebsiteList(loadUrl, offset) {
+    function loadWebsiteList(loadUrl, listDiv, nextPage) {
+        if (!loadUrl || loadUrl == "") {
+            return;
+        }
         $.ajax({
-            url: "${rc.contextPath}" + loadUrl,
+            url: loadUrl,
             async: false,
-            data: {
-                offset: offset
-            },
             success: function (response) {
-                if (response.success){
-                    var data = response.data;
-                    $("#websiteTemplate").tmpl(data).appendTo('#website-list');
-                    nextOffset = response.pager.nextOffset;
-                    if (nextOffset > -1 && $(document).height() <= $(window).height()) {
-                        loadWebsiteList(loadUrl, nextOffset);
-                    }
+                var list = $(response).find("#website-list").html();
+                $(list).appendTo(listDiv);
+                if ($(response).find("#nextPage").length > 0) {
+                    var nextPageUrl = $(response).find("#nextPage").attr("href");
+                    $(nextPage).attr("href", nextPageUrl);
+                    $(nextPage).show();
                 } else {
-                    nextOffset = -1;
+                    $(nextPage).attr("href", "");
+                    $(nextPage).hide();
                 }
             },
             error: function (jqXHR, status, errorThrown) {
-                nextOffset = -1;
+                $(nextPage).attr("href", "");
+                $(nextPage).hide();
             },
             type:'post',
-            dataType:'json'
+            dataType:'html'
         });
     }
 </script>

@@ -43,6 +43,14 @@
     where w.id = wc.website_id and wc.account_id = a.id and wc.from = 1
     order by click_count desc limit #{offset}, #{size}
   </select>
+  <select id="selectByFromAccountId" resultMap="WebsiteAccountResultMap">
+    select w.id, w.title, w.summary, w.url, w.click_count,
+    w.created_at, w.updated_at, w.url_hash, a.username
+    from website w, website_collect wc, account a
+    where w.id = wc.website_id and wc.account_id = a.id and wc.from = 1
+    and wc.account_id = #{accountId}
+    order by created_at desc limit #{offset}, #{size}
+  </select>
   <insert id="insertSelective" parameterType="com.pinmost.web.model.Website">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()

@@ -50,7 +50,7 @@ public class WebsiteServiceImpl implements WebsiteService{
         List<WebsiteAccount> websiteList = websiteMapper.selectOrderByCreatedAt(offset, PAGE_SIZE);
 
         int nextOffset;
-        if (websiteList.isEmpty()) {
+        if (websiteList.size() < PAGE_SIZE) {
             nextOffset = -1;
         } else {
             nextOffset = offset + PAGE_SIZE;
@@ -67,6 +67,25 @@ public class WebsiteServiceImpl implements WebsiteService{
             offset = 0;
         }
         List<WebsiteAccount> websiteList = websiteMapper.selectOrderByClickCount(offset, PAGE_SIZE);
+
+        int nextOffset;
+        if (websiteList.size() < PAGE_SIZE) {
+            nextOffset = -1;
+        } else {
+            nextOffset = offset + PAGE_SIZE;
+        }
+
+        int previousOffset = offset - PAGE_SIZE;
+        Pager pager = new Pager(previousOffset, nextOffset, -1);
+        return RangeDataResult.success(websiteList, pager);
+    }
+
+    @Override
+    public RangeDataResult<WebsiteAccount> getAccountPinList(Integer accountId, int offset) {
+        if (offset < 0) {
+            offset = 0;
+        }
+        List<WebsiteAccount> websiteList = websiteMapper.selectByFromAccountId(accountId, offset, PAGE_SIZE);
 
         int nextOffset;
         if (websiteList.isEmpty()) {

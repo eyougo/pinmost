@@ -31,6 +31,7 @@ public class WebsiteServiceTest extends AbstractSpringTest{
         for (int i = 0; i < 100; i++) {
             Website website = new Website();
             website.setClickCount(i);
+            Thread.sleep(2000);
             website.setTitle(i+"ddddasdfasdfasdfdasdfasdfasdf");
             website.setSummary(i+"adadfpyueqprqwnepghanfangasngapsdn asdfasdfanf  asdijfasijdfas adijfangphapdfjas asdjfasdjfaisdjf");
             website.setUrl("http://www.sdfs.com"+i);

@@ -1,6 +1,9 @@
 package com.pinmost.web.controller;
 
+import com.eyougo.common.result.RangeDataResult;
+import com.pinmost.web.model.WebsiteAccount;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -8,20 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping
-public class IndexController {
+public class SurfaceController {
 
     @RequestMapping("/surface")
     public String surface()  {
         return "surface.ftl";
     }
 
-    @RequestMapping({"/index", "/"})
-    public String index(){
-        return "most_new.ftl";
-    }
-
-    @RequestMapping({"/most_click"})
-    public String mostClick(){
-        return "most_click.ftl";
-    }
 }

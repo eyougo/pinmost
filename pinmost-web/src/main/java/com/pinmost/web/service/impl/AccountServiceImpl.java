@@ -17,11 +17,6 @@ import org.springframework.stereotype.Service;
 @Service("accountService")
 public class AccountServiceImpl implements AccountService{
 
-    @Value("${dataSource.jdbcUrl}")
-    private String jdbcUrl;
-
-
-
     @Autowired
     private AccountMapper accountMapper;
 

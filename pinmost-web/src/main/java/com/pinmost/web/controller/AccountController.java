@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,6 +57,11 @@ public class AccountController extends BaseController{
     public String logout(HttpSession session) {
         session.removeAttribute(ACCOUNT_SESSION_KEY);
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/{username}")
+    public String person(@PathVariable String username,  HttpSession session) {
+        return "/person.ftl";
     }
 
     @RequestMapping(value = "/join", method = RequestMethod.GET)
