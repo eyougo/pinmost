@@ -80,12 +80,12 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-        if ($(window).scrollTop() < 300) {
+        if ($(window).scrollTop() < 500) {
             $("#backtop").hide();
         }
 
         $(window).scroll(function () {
-            if ($(window).scrollTop() < 300) {
+            if ($(window).scrollTop() < 500) {
                 $("#backtop").fadeOut();
             } else {
                 $("#backtop").fadeIn();
@@ -98,7 +98,10 @@
     });
 
     function setActiveNavbar(index) {
-        $("#navbar").children()
+        $("#navbar").children("li").each(function () {
+            $(this).removeClass("active");
+        });
+        $("#navbar>li:eq("+index+")").addClass("active");
     }
 
     function loadWebsiteList(loadUrl, listDiv, nextPage) {

@@ -39,7 +39,7 @@
                                     </p>
                                     <div class="row">
                                         <div class="col-xs-10 col-md-9 text-muted">
-                                            来自: ${websiteAccount.username} &nbsp;&nbsp;时间：${websiteAccount.createdAt}
+                                            来自: ${websiteAccount.username} &nbsp;&nbsp;时间：${websiteAccount.createdAt?datetime}
                                         </div>
                                         <span class="col-xs-2 col-md-3 text-right">
                                         <#--
@@ -78,6 +78,9 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+
+        setActiveNavbar(0);
+
         $(window).scroll(function () {
             if ($(document).height() - $(window).height() - $(window).scrollTop() < 100 && $("#nextPage").length > 0 && $("#nextPage").attr("href") != "") {
                 var nextPageUrl = $("#nextPage").attr("href");
