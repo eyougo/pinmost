@@ -1,9 +1,6 @@
 package com.pinmost.web.controller;
 
-import com.eyougo.common.result.RangeDataResult;
-import com.pinmost.web.model.WebsiteAccount;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -17,5 +14,12 @@ public class SurfaceController {
     public String surface()  {
         return "surface.ftl";
     }
+
+    @RequestMapping("/test")
+    public String test()  {
+        return "test.ftl";
+    }
+
+
 
 }

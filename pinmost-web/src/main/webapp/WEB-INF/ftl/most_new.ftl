@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     <title>首页 - 最新发布的Pin</title>
-    <script src="${rc.contextPath}/js/jquery.tmpl.js"></script>
 </head>
 <body>
 <div class="container">
@@ -39,7 +38,7 @@
                                     </p>
                                     <div class="row">
                                         <div class="col-xs-10 col-md-9 text-muted">
-                                            来自: ${websiteAccount.username} &nbsp;&nbsp;时间：${websiteAccount.createdAt?datetime}
+                                            来自: ${websiteAccount.username} &nbsp;&nbsp;时间：${websiteAccount.createdAt}
                                         </div>
                                         <span class="col-xs-2 col-md-3 text-right">
                                         <#--

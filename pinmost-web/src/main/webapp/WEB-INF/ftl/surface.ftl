@@ -98,8 +98,8 @@
     });
 
     function setActiveNavbar(index) {
-        $("#navbar").children("li").each(function () {
-            $(this).removeClass("active");
+        $("#navbar").children("li").each(function (li) {
+            li.remo
         });
         $("#navbar>li:eq("+index+")").addClass("active");
     }

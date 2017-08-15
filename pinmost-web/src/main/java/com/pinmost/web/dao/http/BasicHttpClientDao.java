@@ -13,16 +13,20 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Repository;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by mei on 09/08/2017.
@@ -30,6 +34,7 @@ import java.util.concurrent.TimeUnit;
 @Repository("httpClientDao")
 public class BasicHttpClientDao implements InitializingBean, DisposableBean, HttpClientDao {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BasicHttpClientDao.class);
     private static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36";
     private static final int TIME_OUT = 2000;
     private CloseableHttpClient httpClient;
@@ -113,7 +118,24 @@ public class BasicHttpClientDao implements InitializingBean, DisposableBean, Htt
                 throw new ClientProtocolException("http.error.response.content_type_not_correct");
             }
 
-            return EntityUtils.toString(entity);
+            String content = EntityUtils.toString(entity, Charset.defaultCharset());
+            try {
+                if (contentType.getCharset() == null) {
+                    String regEx="(?=<meta).*?(?<=charset)[\\s]*=[\\s]*['|\"]?([a-zA-Z0-9-]*)";
+                    Pattern p=Pattern.compile(regEx, Pattern.CASE_INSENSITIVE);
+                    Matcher m=p.matcher(content);  // 默认编码转成字符串，因为我们的匹配中无中文，所以串中可能的乱码对我们没有影响
+                    boolean result=m.find();
+                    if (result == true && m.groupCount() == 1) {
+                        Charset contentCharset = Charset.forName(m.group(1));
+                        if (!Charset.defaultCharset().equals(contentCharset)){
+                            return new String(content.getBytes(Charset.defaultCharset()), contentCharset);
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                LOGGER.error(e.getMessage(), e);
+            }
+            return content;
         });
     }
 }

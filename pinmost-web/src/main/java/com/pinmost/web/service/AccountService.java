@@ -1,5 +1,6 @@
 package com.pinmost.web.service;
 
+import com.eyougo.common.result.BooleanResult;
 import com.eyougo.common.result.DataResult;
 import com.pinmost.web.model.Account;
 
@@ -11,4 +12,6 @@ public interface AccountService {
     DataResult<Account> doValidateLogin(String login, String password);
 
     DataResult<Account> doCreateAccount(Account account);
+
+    BooleanResult checkUsername(String username);
 }

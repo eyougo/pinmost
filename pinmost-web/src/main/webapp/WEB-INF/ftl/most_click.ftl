@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     <title>首页 - 点击最多的Pin</title>
-    <script src="${rc.contextPath}/js/jquery.tmpl.js"></script>
 </head>
 <body>
 <div class="container">

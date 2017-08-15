@@ -5,6 +5,7 @@
         <path>/*</path>
         <decorator>/surface</decorator>
     </mapping>
+    <mapping path="/test" exclude="true" />
 	<mapping path="/js/*" exclude="true" />
     <mapping path="/css/*" exclude="true" />
 	<mapping path="/fonts/*" exclude="true" />

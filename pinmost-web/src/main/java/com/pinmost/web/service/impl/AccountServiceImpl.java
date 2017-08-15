@@ -1,13 +1,14 @@
 package com.pinmost.web.service.impl;
 
 import com.eyougo.common.dao.mapper.BaseModelMapper;
+import com.eyougo.common.result.BooleanResult;
 import com.eyougo.common.result.DataResult;
 import com.pinmost.web.dao.mapper.AccountMapper;
 import com.pinmost.web.model.Account;
 import com.pinmost.web.service.AccountService;
+import com.pinmost.web.util.ReservedUsernames;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
@@ -41,12 +42,6 @@ public class AccountServiceImpl implements AccountService{
         if (accountMapper.selectCountByEmail(account.getEmail()) > 0) {
             return DataResult.failed("account.register.error.email");
         }
-        if (accountMapper.selectCountByUsername(account.getUsername()) > 0) {
-            return DataResult.failed("account.register.error.username");
-        }
-        if (StringUtils.isBlank(account.getUsername())) {
-            return DataResult.failed("account.register.error.username");
-        }
         try {
             accountMapper.insertSelective(account);
         }catch (DuplicateKeyException e) {
@@ -55,4 +50,28 @@ public class AccountServiceImpl implements AccountService{
         Account newAccount = accountMapper.selectByPrimaryKey(account.getId());
         return DataResult.success(newAccount);
     }
+
+    @Override
+    public BooleanResult checkUsername(String username) {
+        if (StringUtils.isBlank(username)) {
+            return BooleanResult.failed("account.register.error.username_blank");
+        }
+        if (!StringUtils.isAlphanumeric(username) || !StringUtils.isAsciiPrintable(username)){
+            return BooleanResult.failed("account.register.error.username_not_alphanumeric");
+        }
+        if (ReservedUsernames.isReservedUsername(username)){
+            return BooleanResult.failed("account.register.error.username_reserved");
+        }
+        if (accountMapper.selectCountByUsername(username) > 0) {
+            return BooleanResult.failed("account.register.error.username_duplicate");
+        }
+        return BooleanResult.success();
+    }
+
+    public static void main(String[] args){
+        System.out.println(StringUtils.isAlphanumeric("测试啊大是大非"));
+        System.out.println(StringUtils.isAsciiPrintable("测试啊大是大非"));
+        System.out.println(StringUtils.isAlphanumeric("dd1-"));
+        System.out.println(StringUtils.isAsciiPrintable("22123-&^"));
+   }
 }

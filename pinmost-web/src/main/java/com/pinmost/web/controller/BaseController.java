@@ -1,9 +1,6 @@
 package com.pinmost.web.controller;
 
 import com.pinmost.web.model.Account;
-import freemarker.ext.beans.BeansWrapper;
-import freemarker.template.TemplateHashModel;
-import freemarker.template.TemplateModelException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.MessageSource;
@@ -30,26 +27,4 @@ public abstract class BaseController {
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
-
-    public TemplateHashModel getStaticModel(Class clazz){
-        TemplateHashModel staticModels = BeansWrapper.getDefaultInstance().getStaticModels();
-        TemplateHashModel staticModel = null;
-        try {
-            staticModel = (TemplateHashModel)staticModels.get(clazz.getName());
-        } catch (TemplateModelException e) {
-
-        }
-        return staticModel;
-    }
-
-    public TemplateHashModel getEnumModel(Class clazz){
-        TemplateHashModel enumModels = BeansWrapper.getDefaultInstance().getEnumModels();
-        TemplateHashModel enumModel = null;
-        try {
-            enumModel = (TemplateHashModel)enumModels.get(clazz.getName());
-        } catch (TemplateModelException e) {
-
-        }
-        return enumModel;
-    }
 }
