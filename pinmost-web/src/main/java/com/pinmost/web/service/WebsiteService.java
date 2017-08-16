@@ -15,7 +15,7 @@ public interface WebsiteService {
 
     RangeDataResult<WebsiteAccount> getMostClickList(int offset);
 
-    RangeDataResult<WebsiteAccount> getAccountPinList(Integer accountId, int offset);
+    RangeDataResult<Website> getAccountPinList(Integer accountId, int offset);
 
     BooleanResult doCreateWebsite(Website website, Integer accountId);
 

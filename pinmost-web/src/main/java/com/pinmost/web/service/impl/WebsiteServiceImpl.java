@@ -13,7 +13,6 @@ import com.pinmost.web.model.WebsiteCollect;
 import com.pinmost.web.service.WebsiteService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.client.HttpResponseException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -81,14 +80,14 @@ public class WebsiteServiceImpl implements WebsiteService{
     }
 
     @Override
-    public RangeDataResult<WebsiteAccount> getAccountPinList(Integer accountId, int offset) {
+    public RangeDataResult<Website> getAccountPinList(Integer accountId, int offset) {
         if (offset < 0) {
             offset = 0;
         }
-        List<WebsiteAccount> websiteList = websiteMapper.selectByFromAccountId(accountId, offset, PAGE_SIZE);
+        List<Website> websiteList = websiteMapper.selectByFromAccountId(accountId, offset, PAGE_SIZE);
 
         int nextOffset;
-        if (websiteList.isEmpty()) {
+        if (websiteList.size() < PAGE_SIZE) {
             nextOffset = -1;
         } else {
             nextOffset = offset + PAGE_SIZE;

@@ -39,7 +39,6 @@
 
     $(document).ready(function () {
         $("#join-form").validate({
-            debug: true,
             ignore: [],
             rules: {
                 username: {

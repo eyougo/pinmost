@@ -68,10 +68,12 @@ public class AccountServiceImpl implements AccountService{
         return BooleanResult.success();
     }
 
-    public static void main(String[] args){
-        System.out.println(StringUtils.isAlphanumeric("测试啊大是大非"));
-        System.out.println(StringUtils.isAsciiPrintable("测试啊大是大非"));
-        System.out.println(StringUtils.isAlphanumeric("dd1-"));
-        System.out.println(StringUtils.isAsciiPrintable("22123-&^"));
-   }
+    @Override
+    public DataResult<Account> getAccountByUsername(String username) {
+        Account account = accountMapper.selectByUsername(username);
+        if (account == null) {
+            return DataResult.failed("account.get.error.username_not_exist");
+        }
+        return DataResult.success(account);
+    }
 }

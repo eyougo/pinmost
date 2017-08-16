@@ -50,18 +50,18 @@
                 </div>
                 <div class="collapse navbar-collapse" id="bs-navbar-collapse">
                     <ul class="nav navbar-nav" id="navbar">
-                        <li><a href="${rc.contextPath}/">&nbsp;最新发布的Pin&nbsp;</a></li>
-                        <li><a href="${rc.contextPath}/most_click">&nbsp;点击最多的Pin&nbsp;</a></li>
+                        <li id="nav-most-new"><a href="${rc.contextPath}/">&nbsp;最新发布的Pin&nbsp;</a></li>
+                        <li id="nav-most-click"><a href="${rc.contextPath}/most_click">&nbsp;点击最多的Pin&nbsp;</a></li>
                         <#--
                         <li><a href="#">&nbsp;最多收藏&nbsp;</a></li>-->
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                     <#if Session['account']>
-                        <#--<li><a href="${rc.getContextUrl("/" + Session['account'].username)}">&nbsp;我的&nbsp;</a></li>-->
+                        <li id="nav-my"><a href="${rc.getContextUrl("/" + Session['account'].username)}">&nbsp;我的&nbsp;</a></li>
                         <li><a href="${rc.getContextUrl("/logout")}">&nbsp;退出&nbsp;</a></li>
                     <#else>
-                        <li><a href="${rc.contextPath}/login">&nbsp;登录&nbsp;</a></li>
-                        <li><a href="${rc.contextPath}/join">&nbsp;注册&nbsp;</a></li>
+                        <li id="nav-login"><a href="${rc.contextPath}/login">&nbsp;登录&nbsp;</a></li>
+                        <li id="nav-join"><a href="${rc.contextPath}/join">&nbsp;注册&nbsp;</a></li>
                     </#if>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="${rc.contextPath}/pin"><button type="button" class="btn btn-primary navbar-btn">Pin一下</button></a>
@@ -97,11 +97,11 @@
         });
     });
 
-    function setActiveNavbar(index) {
-        $("#navbar").children("li").each(function (li) {
-            li.remo
+    function setActiveNavbar(id) {
+        $(".navbar-nav").children("li").each(function () {
+            $(this).removeClass("active");
         });
-        $("#navbar>li:eq("+index+")").addClass("active");
+        $(id).addClass("active");
     }
 
     function loadWebsiteList(loadUrl, listDiv, nextPage) {
@@ -112,8 +112,10 @@
             url: loadUrl,
             async: false,
             success: function (response) {
-                var list = $(response).find("#website-list").html();
-                $(list).appendTo(listDiv);
+                if ($(response).find("#website-list").length > 0) {
+                    var list = $(response).find("#website-list").html();
+                    $(list).appendTo(listDiv);
+                }
                 if ($(response).find("#nextPage").length > 0) {
                     var nextPageUrl = $(response).find("#nextPage").attr("href");
                     $(nextPage).attr("href", nextPageUrl);

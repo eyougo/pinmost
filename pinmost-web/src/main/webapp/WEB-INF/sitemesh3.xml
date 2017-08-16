@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sitemesh>
-    <include-error-pages>false</include-error-pages>
+    <include-error-pages>true</include-error-pages>
     <mapping>
         <path>/*</path>
         <decorator>/surface</decorator>

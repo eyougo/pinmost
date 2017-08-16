@@ -14,4 +14,6 @@ public interface AccountService {
     DataResult<Account> doCreateAccount(Account account);
 
     BooleanResult checkUsername(String username);
+
+    DataResult<Account> getAccountByUsername(String username);
 }

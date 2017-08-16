@@ -78,7 +78,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-        setActiveNavbar(1);
+        setActiveNavbar("#nav-most-click");
 
         $(window).scroll(function () {
             if ($(document).height() - $(window).height() - $(window).scrollTop() < 100 && $("#nextPage").length > 0 && $("#nextPage").attr("href") != "") {

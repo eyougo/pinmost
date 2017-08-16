@@ -6,23 +6,16 @@ import com.eyougo.common.result.RangeDataResult;
 import com.pinmost.web.model.Account;
 import com.pinmost.web.model.Website;
 import com.pinmost.web.model.WebsiteAccount;
+import com.pinmost.web.service.AccountService;
 import com.pinmost.web.service.WebsiteService;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.standard.DateTimeContext;
-import org.springframework.format.datetime.standard.DateTimeContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.ZoneId;
-import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by mei on 23/03/2017.
@@ -33,6 +26,9 @@ public class WebsiteController extends BaseController{
 
     @Autowired
     private WebsiteService websiteService;
+
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value = "/pin")
     public String pin(){
@@ -101,10 +97,37 @@ public class WebsiteController extends BaseController{
         return "/most_click.ftl";
     }
 
-    @RequestMapping("/pinList")
-    @ResponseBody
-    public RangeDataResult<WebsiteAccount> pinList(@RequestParam int offset, HttpSession session){
-        Account account = getAccountFromSession(session);
-        return websiteService.getAccountPinList(account.getId(), offset);
+    @RequestMapping("/{username}")
+    public String person(@PathVariable String username, HttpSession session, Model model) {
+        DataResult<Account> accountDataResult = accountService.getAccountByUsername(username);
+        if (!accountDataResult.getSuccess()) {
+            return "redirect:/";
+        }
+        Account account = accountDataResult.getData();
+        model.addAttribute("account", account);
+        Account sessionAccount = this.getAccountFromSession(session);
+        if (sessionAccount != null) {
+            model.addAttribute("sessionAccount", sessionAccount);
+        }
+        RangeDataResult<Website> dataResult = websiteService.getAccountPinList(account.getId(), 0);
+        model.addAttribute("dataResult", dataResult);
+        return "/person.ftl";
+    }
+
+    @RequestMapping("/{username}/{offset}")
+    public String personList(@PathVariable String username, @PathVariable(required = false) int offset, HttpSession session, Model model){
+        DataResult<Account> accountDataResult = accountService.getAccountByUsername(username);
+        if (!accountDataResult.getSuccess()) {
+            return "redirect:/";
+        }
+        Account account = accountDataResult.getData();
+        model.addAttribute("account", account);
+        Account sessionAccount = this.getAccountFromSession(session);
+        if (sessionAccount != null) {
+            model.addAttribute("sessionAccount", sessionAccount);
+        }
+        RangeDataResult<Website> dataResult = websiteService.getAccountPinList(account.getId(), offset);
+        model.addAttribute("dataResult", dataResult);
+        return "/person.ftl";
     }
 }

@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>我的</title>
-    <script src="${rc.contextPath}/js/jquery.tmpl.js"></script>
+    <title><#if sessionAccount?? && sessionAccount.id == account.id>我的<#else>${account.username}</#if></title>
 </head>
 <body>
 <div class="container">
@@ -11,62 +10,78 @@
         <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">我发布的Pin</h3>
+                    <h3 class="panel-title"><#if sessionAccount?? && sessionAccount.id == account.id>我<#else>${account.username}</#if>发布的Pin</h3>
                 </div>
-                <div class="list-group" id="pin-list">
-
+                <div class="list-group" id="website-list">
+                <#if dataResult?? && dataResult.getSuccess()>
+                    <#list dataResult.data as website>
+                        <div class="list-group-item">
+                            <h4 class="list-group-item-heading">
+                                <div class="row">
+                                    <div class="col-xs-10 col-md-9 text-hidden">
+                                        <a href="${rc.contextPath}/click?id=${website.id}" target="_blank">${website.title}</a>
+                                    </div>
+                                    <div class="col-xs-2 col-md-3 text-right text-muted">
+                                        <small class="hidden-xs"><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> ${website.clickCount}</small>
+                                    <#-- &nbsp;
+                                    <small class="hidden-xs"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> ${r'${starCount}'}</small>
+                                    -->
+                                    </div>
+                                </div>
+                            </h4>
+                            <div class="list-group-item-text">
+                                <p>${website.summary}
+                                </p>
+                                <div class="row">
+                                    <div class="col-xs-10 col-md-9 text-muted">
+                                        时间：${website.createdAt}
+                                    </div>
+                                    <span class="col-xs-2 col-md-3 text-right">
+                                    <#--
+                                            <a>
+                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 收藏 &nbsp;&nbsp;
+                                            </a>
+                                            <a>
+                                            <span class="glyphicon glyphicon-share" aria-hidden="true"></span> 分享
+                                            </a>
+                                            -->
+                                        </span>
+                                </div>
+                            </div>
+                        </div>
+                    </#list>
+                <#elseif dataResult??>
+                ${dataResult.message}
+                </#if>
                 </div>
+                <nav aria-label="...">
+                    <ul class="pager">
+                    <#if dataResult??>
+                        <#if dataResult.pager.previousOffset gte 0>
+                            <li><a href="${rc.contextPath}/${account.username}/${dataResult.pager.previousOffset}" id="prePage">Previous</a></li>
+                        </#if>
+                        <#if dataResult.pager.nextOffset gte 0>
+                            <li><a href="${rc.contextPath}/${account.username}/${dataResult.pager.nextOffset}" id="nextPage">Next</a></li>
+                        </#if>
+                    </#if>
+                    </ul>
+                </nav>
             </div>
         </div>
         <div class="col-md-1"></div>
     </div>
 </div>
-<script id='pinTemplate' type='text/x-jquery-tmpl'>
-        <div class="list-group-item">
-            <h4 class="list-group-item-heading">
-                <div class="row">
-                    <div class="col-xs-10 col-md-9 text-hidden">
-                        <a href="${rc.contextPath}/click?id=${r'${id}'}" target="_blank">${r'${title}'}</a>
-                    </div>
-                    <div class="col-xs-2 col-md-3 text-right text-muted">
-                        <small class="hidden-xs"><span class="glyphicon glyphicon-hand-up" aria-hidden="true"></span> ${r'${clickCount}'}</small>
-                        <#-- &nbsp;
-                        <small class="hidden-xs"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> ${r'${starCount}'}</small>
-                        -->
-                    </div>
-                </div>
-            </h4>
-            <div class="list-group-item-text">
-                <p>${r'${summary}'}
-                </p>
-                <div class="row">
-                    <div class="col-xs-10 col-md-9 text-muted">
-                        来自: ${r'${username}'} &nbsp;&nbsp;时间：${r'${createdAt}'}
-                    </div>
-                    <span class="col-xs-2 col-md-3 text-right">
-                        <#--
-                        <a>
-                        <span class="glyphicon glyphicon-star" aria-hidden="true"></span> 收藏 &nbsp;&nbsp;
-                        </a>
-                        <a>
-                        <span class="glyphicon glyphicon-share" aria-hidden="true"></span> 分享
-                        </a>
-                        -->
-                    </span>
-                </div>
-            </div>
-        </div>
-</script>
 <script type="text/javascript">
-    var nextOffset = 0;
     $(document).ready(function () {
-        nextOffset = loadWebsiteList("/pinList",0, "#pin-list");
-        $(window).scroll(function () {
-            if ($(document).height() - $(window).height() - $(window).scrollTop() < 50 && nextOffset >= 0) {
-                console.log("nextOffset:" + nextOffset);
-                nextOffset = loadWebsiteList("/pinList", nextOffset, "#pin-list");
+        <#if sessionAccount?? && sessionAccount.id == account.id>
+        setActiveNavbar("#nav-my");
+        </#if>
+        /*$(window).scroll(function () {
+            if ($(document).height() - $(window).height() - $(window).scrollTop() < 100 && $("#nextPage").length > 0 && $("#nextPage").attr("href") != "") {
+                var nextPageUrl = $("#nextPage").attr("href");
+                loadWebsiteList(nextPageUrl, "#website-list", "#nextPage");
             }
-        });
+        });*/
     });
 </script>
 </body>

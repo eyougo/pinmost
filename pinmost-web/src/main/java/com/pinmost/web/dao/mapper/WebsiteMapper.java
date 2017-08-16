@@ -17,7 +17,7 @@ public interface WebsiteMapper extends BaseMapper<Website> {
 
     List<WebsiteAccount> selectOrderByClickCount(@Param("offset") int offset, @Param("size") int size);
 
-    List<WebsiteAccount> selectByFromAccountId(@Param("accountId") Integer accountId, @Param("offset") int offset, @Param("size") int size);
+    List<Website> selectByFromAccountId(@Param("accountId") Integer accountId, @Param("offset") int offset, @Param("size") int size);
 
     void updateClickCount(Integer id);
 }

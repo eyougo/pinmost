@@ -11,4 +11,5 @@ public interface AccountMapper extends BaseMapper<Account> {
 
     int selectCountByUsername(String username);
 
+    Account selectByUsername(String username);
 }

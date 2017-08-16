@@ -34,7 +34,13 @@
     from account
     where username = #{username,jdbcType=VARCHAR}
   </select>
-  <insert id="insertSelective" parameterType="com.pinmost.web.model.Account">
+    <select id="selectByUsername" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from account
+      where username = #{username,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertSelective" parameterType="com.pinmost.web.model.Account">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
