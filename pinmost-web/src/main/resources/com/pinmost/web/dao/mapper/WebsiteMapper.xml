@@ -6,7 +6,9 @@
         <result column="title" jdbcType="VARCHAR" property="title"/>
         <result column="summary" jdbcType="VARCHAR" property="summary"/>
         <result column="url" jdbcType="VARCHAR" property="url"/>
+        <result column="account_id" jdbcType="INTEGER" property="accountId"/>
         <result column="click_count" jdbcType="INTEGER" property="clickCount"/>
+        <result column="star_count" jdbcType="INTEGER" property="starCount"/>
         <result column="created_at" jdbcType="TIMESTAMP" property="createdAt"/>
         <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt"/>
         <result column="url_hash" jdbcType="VARCHAR" property="urlHash"/>
@@ -28,27 +30,31 @@
     WHERE url_hash = #{urlHash, jdbcType=VARCHAR}
   </select>
     <select id="selectOrderByCreatedAt" resultMap="WebsiteAccountResultMap">
-    select w.id, w.title, w.summary, w.url, w.click_count,
+    select w.id, w.title, w.summary, w.url, w.account_id, w.click_count, w.star_count,
     w.created_at, w.updated_at, w.url_hash, a.username
-    from website w, website_collect wc, account a
-    where w.id = wc.website_id and wc.account_id = a.id and wc.from = 1
+    from website w, account a
+    where w.account_id = a.id
     order by created_at desc limit #{offset}, #{size}
   </select>
-    <select id="selectOrderByCollectCount" resultMap="BaseResultMap">
+    <select id="selectOrderByStarCount" resultMap="WebsiteAccountResultMap">
+    select w.id, w.title, w.summary, w.url, w.account_id, w.click_count, w.star_count,
+    w.created_at, w.updated_at, w.url_hash, a.username
+    from website w, account a
+    where w.account_id = a.id
+    order by star_count desc limit #{offset}, #{size}
     </select>
     <select id="selectOrderByClickCount" resultMap="WebsiteAccountResultMap">
-    select w.id, w.title, w.summary, w.url, w.click_count,
+    select w.id, w.title, w.summary, w.url, w.account_id, w.click_count, w.star_count,
     w.created_at, w.updated_at, w.url_hash, a.username
-    from website w, website_collect wc, account a
-    where w.id = wc.website_id and wc.account_id = a.id and wc.from = 1
+    from website w, account a
+    where w.account_id = a.id
     order by click_count desc limit #{offset}, #{size}
   </select>
     <select id="selectByFromAccountId" resultMap="BaseResultMap">
-    select w.id, w.title, w.summary, w.url, w.click_count,
+    select w.id, w.title, w.summary, w.url, w.account_id, w.click_count, w.star_count,
     w.created_at, w.updated_at, w.url_hash
-    from website w, website_collect wc
-    where w.id = wc.website_id and wc.from = 1
-    and wc.account_id = #{accountId}
+    from website w
+    where w.account_id = #{accountId}
     order by created_at desc limit #{offset}, #{size}
     </select>
     <insert id="insertSelective" parameterType="com.pinmost.web.model.Website">
@@ -66,8 +72,14 @@
             <if test="url != null">
                 url,
             </if>
+            <if test="accountId != null">
+                account_count,
+            </if>
             <if test="clickCount != null">
                 click_count,
+            </if>
+            <if test="starCount != null">
+                star_count,
             </if>
             <if test="urlHash != null">
                 url_hash,
@@ -83,8 +95,14 @@
             <if test="url != null">
                 #{url,jdbcType=VARCHAR},
             </if>
+            <if test="accountId != null">
+                #{accountId,jdbcType=INTEGER},
+            </if>
             <if test="clickCount != null">
                 #{clickCount,jdbcType=INTEGER},
+            </if>
+            <if test="starCount != null">
+                #{starCount,jdbcType=INTEGER},
             </if>
             <if test="urlHash != null">
                 #{urlHash,jdbcType=VARCHAR},
@@ -103,8 +121,14 @@
             <if test="url != null">
                 url = #{url,jdbcType=VARCHAR},
             </if>
+            <if test="accountId != null">
+                account_id = #{accountId,jdbcType=INTEGER},
+            </if>
             <if test="clickCount != null">
                 click_count = #{clickCount,jdbcType=INTEGER},
+            </if>
+            <if test="starCount != null">
+                star_count = #{clickCount,jdbcType=INTEGER},
             </if>
             <if test="urlHash != null">
                 url_hash = #{urlHash,jdbcType=VARCHAR},

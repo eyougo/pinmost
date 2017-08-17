@@ -58,7 +58,7 @@
         columnOverride 自定义规则 数据库字段 -> 属性
         ignoreColumn 不生成某字段
          -->
-        <table tableName="website_collect" domainObjectName="WebsiteCollect" modelType="flat"
+        <table tableName="website_star" domainObjectName="WebsiteCollect" modelType="flat"
                enableDeleteByPrimaryKey="false"
                enableCountByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" enableUpdateByExample="false">

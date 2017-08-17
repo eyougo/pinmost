@@ -10,7 +10,11 @@
         <div class="col-md-10">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><#if sessionAccount?? && sessionAccount.id == account.id>我<#else>${account.username}</#if>发布的Pin</h3>
+                    <div class="row">
+                        <div class="col-xs-10 col-md-9 panel-title">
+                            <h4><#if sessionAccount?? && sessionAccount.id == account.id>我<#else>${account.username}</#if>发布的Pin</h4>
+                        </div>
+                    </div>
                 </div>
                 <div class="list-group" id="website-list">
                 <#if dataResult?? && dataResult.getSuccess()>

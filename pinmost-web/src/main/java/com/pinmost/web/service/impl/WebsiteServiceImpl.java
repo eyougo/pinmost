@@ -5,11 +5,9 @@ import com.eyougo.common.result.DataResult;
 import com.eyougo.common.result.Pager;
 import com.eyougo.common.result.RangeDataResult;
 import com.pinmost.web.dao.http.HttpClientDao;
-import com.pinmost.web.dao.mapper.WebsiteCollectMapper;
 import com.pinmost.web.dao.mapper.WebsiteMapper;
 import com.pinmost.web.model.Website;
 import com.pinmost.web.model.WebsiteAccount;
-import com.pinmost.web.model.WebsiteCollect;
 import com.pinmost.web.service.WebsiteService;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -34,9 +32,6 @@ public class WebsiteServiceImpl implements WebsiteService{
 
     @Autowired
     private WebsiteMapper websiteMapper;
-
-    @Autowired
-    private WebsiteCollectMapper websiteCollectMapper;
 
     @Autowired
     private HttpClientDao httpClientDao;
@@ -105,17 +100,12 @@ public class WebsiteServiceImpl implements WebsiteService{
             return BooleanResult.failed("website.create.error.urlhash");
         }
         website.setUrlHash(urlHash);
-        website.setClickCount(0);
+        website.setAccountId(accountId);
         try {
             websiteMapper.insertSelective(website);
         }catch (DuplicateKeyException e) {
             return BooleanResult.failed("website.create.error.urlhash");
         }
-        WebsiteCollect websiteCollect = new WebsiteCollect();
-        websiteCollect.setWebsiteId(website.getId());
-        websiteCollect.setAccountId(accountId);
-        websiteCollect.setFrom(true);
-        websiteCollectMapper.insertSelective(websiteCollect);
         return BooleanResult.success();
     }
 

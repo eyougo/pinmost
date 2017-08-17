@@ -17,7 +17,11 @@ public class Website extends BaseModel implements Serializable{
 
     private Integer clickCount;
 
+    private Integer starCount;
+
     private String urlHash;
+
+    private Integer accountId;
 
     public Integer getId() {
         return id;
@@ -65,5 +69,21 @@ public class Website extends BaseModel implements Serializable{
 
     public void setUrlHash(String urlHash) {
         this.urlHash = urlHash == null ? null : urlHash.trim();
+    }
+
+    public Integer getStarCount() {
+        return starCount;
+    }
+
+    public void setStarCount(Integer starCount) {
+        this.starCount = starCount;
+    }
+
+    public Integer getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Integer accountId) {
+        this.accountId = accountId;
     }
 }

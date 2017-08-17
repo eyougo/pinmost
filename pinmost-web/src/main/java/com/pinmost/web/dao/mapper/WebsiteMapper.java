@@ -13,7 +13,7 @@ public interface WebsiteMapper extends BaseMapper<Website> {
 
     List<WebsiteAccount> selectOrderByCreatedAt(@Param("offset") int offset, @Param("size") int size);
 
-    List<Website> selectOrderByCollectCount(@Param("offset") int offset, @Param("size") int size);
+    List<WebsiteAccount> selectOrderByStarCount(@Param("offset") int offset, @Param("size") int size);
 
     List<WebsiteAccount> selectOrderByClickCount(@Param("offset") int offset, @Param("size") int size);
 
