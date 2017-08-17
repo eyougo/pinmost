@@ -411,6 +411,7 @@ public class ReservedUsernames {
             "recent",
             "recruit",
             "recruitment",
+            "redirect",
             "register",
             "registration",
             "release",

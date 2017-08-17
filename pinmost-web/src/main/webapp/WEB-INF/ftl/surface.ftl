@@ -55,17 +55,19 @@
                         <#--
                         <li><a href="#">&nbsp;最多收藏&nbsp;</a></li>-->
                     </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                    <#if Session['account']>
-                        <li id="nav-my"><a href="${rc.getContextUrl("/" + Session['account'].username)}">&nbsp;我的&nbsp;</a></li>
-                        <li><a href="${rc.getContextUrl("/logout")}">&nbsp;退出&nbsp;</a></li>
-                    <#else>
-                        <li id="nav-login"><a href="${rc.contextPath}/login">&nbsp;登录&nbsp;</a></li>
-                        <li id="nav-join"><a href="${rc.contextPath}/join">&nbsp;注册&nbsp;</a></li>
-                    </#if>
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav">
+                        <#if Session['account']>
+                            <li id="nav-my"><a href="${rc.getContextUrl("/" + Session['account'].username)}">&nbsp;我的&nbsp;</a></li>
+                            <li><a href="${rc.getContextUrl("/logout")}">&nbsp;退出&nbsp;</a></li>
+                        <#else>
+                            <li id="nav-login"><a href="${rc.contextPath}/login">&nbsp;登录&nbsp;</a></li>
+                            <li id="nav-join"><a href="${rc.contextPath}/join">&nbsp;注册&nbsp;</a></li>
+                        </#if>
+                        </ul>
                         &nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="${rc.contextPath}/pin"><button type="button" class="btn btn-primary navbar-btn">Pin一下</button></a>
-                    </ul>
+                    </div>
                 </div>
             </div>
             <div class="col-md-1"></div>
@@ -133,6 +135,16 @@
             dataType:'html'
         });
     }
+</script>
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-104688192-1', 'auto');
+    ga('send', 'pageview');
+
 </script>
 </body>
 </html>

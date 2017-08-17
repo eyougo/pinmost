@@ -22,6 +22,8 @@
                     <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" id="login-button" type="submit">登录</button>
+                    <br/>
+                <div class="text-right"><a href="${rc.contextPath}/join">没有账号？请点此注册</a></div>
             </form>
         </div>
         <div class="col-md-4"></div>

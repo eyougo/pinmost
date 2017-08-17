@@ -30,6 +30,8 @@
                     </div>
                 </#if>
                 <button class="btn btn-lg btn-primary btn-block" id="join-button" type="submit">注册</button>
+                <br/>
+                <div class="text-right"><a href="${rc.contextPath}/login">已有账号？请点此登录</a></div>
             </form>
         </div>
         <div class="col-md-4"></div>
